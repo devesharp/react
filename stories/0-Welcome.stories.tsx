@@ -1,16 +1,11 @@
-import React from "react";
-import { linkTo } from "@storybook/addon-links";
-import { Welcome } from "@storybook/react/demo";
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 import ExampleComponent from "../src/index";
 
 export default {
   title: "Welcome"
 };
 
-export const toStorybook = () => (
+storiesOf("Button", module).add("with emoji", () => (
   <ExampleComponent text="Modern React component module sdasasd" />
-);
-
-toStorybook.story = {
-  name: "to Storybook"
-};
+));
