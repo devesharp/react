@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    margin: 0px;
+    padding: 0px;
+    // background: red;
+}
+
+@import "./utils.scss";
+@import "./../components/header/header.scss";
+@import "./../components/initials-avatar/initials-avatar.scss";
