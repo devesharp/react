@@ -1,0 +1,54 @@
+@import "../../styles/variables.scss";
+
+.ds-user-avatar {
+    border-radius: 100%;
+    background: #eee;
+    width: $icon-m;
+    height: $icon-m;
+    line-height: $icon-m;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    &.initials-xs {
+        width: $icon-xs;
+        height: $icon-xs;
+        line-height: $icon-xs;
+        font-size: $icon-xs/2;
+    }
+
+    &.initials-s {
+        width: $icon-s;
+        height: $icon-s;
+        line-height: $icon-s;
+        font-size: $icon-s/2;
+    }
+
+    &.initials-m {
+        width: $icon-m;
+        height: $icon-m;
+        line-height: $icon-m;
+        font-size: $icon-m/2;
+    }
+
+    &.initials-l {
+        width: $icon-l;
+        height: $icon-l;
+        line-height: $icon-l;
+        font-size: $icon-l/2;
+    }
+
+    &.initials-xl {
+        width: $icon-xl;
+        height: $icon-xl;
+        line-height: $icon-xl;
+        font-size: $icon-xl/2;
+    }
+}
