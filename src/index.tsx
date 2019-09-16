@@ -7,10 +7,6 @@ export type Props = { text: string };
 
 export default class ExampleComponent extends React.Component<Props> {
   render() {
-    const { text } = this.props;
-
-    return (
-      <div style={{ background: "red" }}>Example Component123: {text}</div>
-    );
+    return <div style={{ background: "red" }}>Example Component123: </div>;
   }
 }

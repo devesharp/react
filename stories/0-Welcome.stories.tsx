@@ -3,9 +3,9 @@ import { storiesOf } from "@storybook/react";
 import ExampleComponent from "../src/index";
 
 export default {
-  title: "Welcome"
+    title: "Welcome"
 };
 
 storiesOf("Button", module).add("with emoji", () => (
-  <ExampleComponent text="Modern React component module sdasasd" />
+    <ExampleComponent text="Modern React component module sdasasd" />
 ));
