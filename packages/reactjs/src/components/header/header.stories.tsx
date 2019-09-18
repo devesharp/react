@@ -79,34 +79,306 @@ let data: PHeader = {
         ]
     }
 };
-storiesOf("Header", module)
+
+storiesOf("UI|Header/desktop", module)
     .add("default", () => (
         <Router>
             <Header {...data} />
         </Router>
     ))
+    .add("menu active", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "/iframe.html"
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ))
+    .add("menu active with category", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "",
+                            subMenu: [
+                                {
+                                    title: (
+                                        <>
+                                            <FontAwesomeIcon icon={faUserCircle} /> Home
+                                        </>
+                                    ),
+                                    route: "/iframe.html"
+                                }
+                            ]
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ))
+    .add("submenu open", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "",
+                            opened: true,
+                            subMenu: [
+                                {
+                                    title: (
+                                        <>
+                                            <FontAwesomeIcon icon={faUserCircle} /> Home 2
+                                        </>
+                                    ),
+                                    route: "/section"
+                                },
+                                {
+                                    title: (
+                                        <>
+                                            <FontAwesomeIcon icon={faUserCircle} /> Home 12
+                                        </>
+                                    ),
+                                    route: "/section12"
+                                }
+                            ]
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ))
+    .add("menu user open", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    openUserMenuInfo: true,
+                    menu: [
+                        {
+                            title: "Home",
+                            route: "/"
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ));
+
+storiesOf("UI|Header/mobile", module)
     .addParameters({
         viewport: {
             viewports: {
                 ...INITIAL_VIEWPORTS,
                 ...{
                     mobile: {
-                        name: "Kindle Fire 2",
+                        name: "mobile",
                         styles: {
                             width: "420px",
                             height: "500px"
                         }
                     }
                 }
-            }
+            },
+            defaultViewport: "iphone6"
         }
     })
-    .add(
-        "mobile",
-        () => (
-            <Router>
-                <Header {...data} />
-            </Router>
-        ),
-        { viewport: { defaultViewport: "mobile" } }
-    );
+    .add("default", () => (
+        <Router>
+            <Header {...data} />
+        </Router>
+    ))
+    .add("menu open", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menuMobileOpen: true,
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "",
+                            subMenu: [
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                }
+                            ]
+                        },
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: ""
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ))
+    .add("menu open with menu active", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menuMobileOpen: true,
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "/iframe.html"
+                        },
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "",
+                            subMenu: [
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                }
+                            ]
+                        },
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: ""
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ))
+    .add("menu open with submenu active", () => (
+        <Router>
+            <Header
+                data={{
+                    logo,
+                    user: {
+                        name: "Verônica",
+                        image: avatar
+                    },
+                    menuMobileOpen: true,
+                    menu: [
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "/"
+                        },
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: "",
+                            subMenu: [
+                                {
+                                    title: "Home",
+                                    route: "/iframe.html"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                },
+                                {
+                                    title: "Home",
+                                    route: "/"
+                                }
+                            ]
+                        },
+                        {
+                            title: (
+                                <>
+                                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                                </>
+                            ),
+                            route: ""
+                        }
+                    ]
+                }}
+            />
+        </Router>
+    ));

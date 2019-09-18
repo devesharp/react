@@ -19,22 +19,25 @@ export interface PHeader {
         menu: {
             title: string | JSX.Element;
             route: string;
+            opened?: boolean; // Only test: Ativar menu
             subMenu?: {
                 title: string | JSX.Element;
                 route: string;
             }[];
         }[];
+        openUserMenuInfo?: boolean; // Only test: Ativar modal do usuário
+        menuMobileOpen?: boolean; // Only test: Abrir menu mobile
     };
 }
 interface SHeader {
     // Menu do usuário aberto
-    openMenuInfo: boolean;
+    openUserMenuInfo: boolean;
     menuOpen: boolean;
 }
 
 export default class Header extends React.Component<PHeader, SHeader> {
     state = {
-        openMenuInfo: false,
+        openUserMenuInfo: false,
         menuOpen: false
     };
 
@@ -56,6 +59,14 @@ export default class Header extends React.Component<PHeader, SHeader> {
         this.closeUserMenuInfo = this.closeUserMenuInfo.bind(this);
         this.toggleUserMenuInfo = this.toggleUserMenuInfo.bind(this);
         this.toggleUserMenuMobile = this.toggleUserMenuMobile.bind(this);
+
+        // Testes Storybook
+        if (this.props.data.openUserMenuInfo) {
+            this.state.openUserMenuInfo = true;
+        }
+        if (this.props.data.menuMobileOpen) {
+            this.state.menuOpen = true;
+        }
     }
 
     /**
@@ -66,7 +77,6 @@ export default class Header extends React.Component<PHeader, SHeader> {
     isSubRoute(location, subMenu: any) {
         for (let x in subMenu) {
             if (subMenu[x].route == location.pathname) {
-                console.log(subMenu[x].route, location.pathname);
                 return true;
             }
         }
@@ -75,7 +85,7 @@ export default class Header extends React.Component<PHeader, SHeader> {
 
     toggleUserMenuInfo() {
         this.setState((state, props) => ({
-            openMenuInfo: !state.openMenuInfo
+            openUserMenuInfo: !state.openUserMenuInfo
         }));
     }
 
@@ -89,7 +99,7 @@ export default class Header extends React.Component<PHeader, SHeader> {
      * Fecha Menu do usuário
      */
     closeUserMenuInfo() {
-        this.setState({ openMenuInfo: false });
+        this.setState({ openUserMenuInfo: false });
     }
 
     /**
@@ -97,7 +107,7 @@ export default class Header extends React.Component<PHeader, SHeader> {
      */
     renderUserMenu(): JSX.Element {
         let { user, menuUserBar } = this.props.data;
-        let { openMenuInfo } = this.state;
+        let { openUserMenuInfo } = this.state;
 
         return (
             <ClickOutside onClickOutside={this.closeUserMenuInfo}>
@@ -108,7 +118,7 @@ export default class Header extends React.Component<PHeader, SHeader> {
                         </div>
                         Olá, <span className="username">{user.name}</span>{" "}
                         <FontAwesomeIcon icon={faChevronDown} flip="horizontal" />
-                        <div className={"username-container-popup " + (openMenuInfo ? "opened" : "")}>
+                        <div className={"username-container-popup " + (!openUserMenuInfo || "opened")}>
                             <div className="ds-table" onClick={this.closeUserMenuInfo}>
                                 <div className="ds-cell">
                                     <UserAvatar user={user} size={"m"} />
@@ -193,9 +203,9 @@ export default class Header extends React.Component<PHeader, SHeader> {
 
                                         {/* -------- SUBMENU --------  */}
                                         {!!item.subMenu && (
-                                            <div className="ds-menu-category">
+                                            <div className={"ds-menu-category " + (!item.opened || "hover")}>
                                                 <NavLink
-                                                    className={"ds-menu-item"}
+                                                    className={"ds-menu-item " + (!item.opened || "hover")}
                                                     activeClassName="ds-menu-item-active"
                                                     to={{ pathname: item.route }}
                                                     onClick={e => e.preventDefault()} // Desabilita link

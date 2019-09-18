@@ -234,6 +234,7 @@
                 margin: 0px 3px;
                 position: relative;
 
+                &.hover,
                 &:hover {
                     cursor: pointer;
                     background: rgba($color: #ffffff, $alpha: 0.05);
@@ -289,6 +290,7 @@
                         display: block;
                         color: map-get($theme, text-color);
 
+                        &.hover,
                         &:hover {
                             background: rgba(0, 0, 0, 0.04);
                             color: map-get($theme, primary);
@@ -301,6 +303,7 @@
                     }
                 }
 
+                &.hover,
                 &:hover {
                     &:before {
                         transform: translateY(0px);
