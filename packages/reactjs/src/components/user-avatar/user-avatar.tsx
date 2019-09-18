@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import InitialsAvatar from "../initials-avatar/initials-avatar";
 
 interface PUserAvatar {
@@ -9,7 +9,7 @@ interface PUserAvatar {
     };
 }
 
-export default class UserAvatar extends Component<PUserAvatar> {
+export default class UserAvatar extends React.Component<PUserAvatar> {
     state = {};
 
     /**
@@ -17,7 +17,10 @@ export default class UserAvatar extends Component<PUserAvatar> {
      */
     classStyle: string;
 
-    componentWillMount() {
+    /**
+     * Configurar componente
+     */
+    configure() {
         /**
          * Tamanho do size
          */
@@ -33,7 +36,13 @@ export default class UserAvatar extends Component<PUserAvatar> {
         }
     }
 
+    /**
+     * Render
+     */
     render() {
+        this.configure();
+
+        let size = this.props.size;
         let { name, image } = this.props.user;
 
         if (image) {
@@ -43,7 +52,7 @@ export default class UserAvatar extends Component<PUserAvatar> {
                 </div>
             );
         } else {
-            return <InitialsAvatar name={name} dark={true} />;
+            return <InitialsAvatar name={name} dark={true} size={size} />;
         }
     }
 }

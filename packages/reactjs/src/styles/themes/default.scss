@@ -1,0 +1,16 @@
+$theme: (
+    primary: #7159c1,
+    text-color: rgb(95, 98, 129),
+    header-background: #7159c1,
+    header-text-color: #ffffff,
+    header-text-color-username:
+        rgba(
+            $color: #fff,
+            $alpha: 0.6
+        ),
+    header-active:
+        rgba(
+            $color: #000,
+            $alpha: 0.4
+        )
+);

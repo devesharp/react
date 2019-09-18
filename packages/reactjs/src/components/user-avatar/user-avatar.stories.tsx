@@ -29,4 +29,7 @@ storiesOf("UserAvatar", module)
     ))
     .add("size xl with image", () => (
         <UserAvatar user={userWithImage} size={"xl"} />
+    ))
+    .add("size xl without image", () => (
+        <UserAvatar user={userWithoutImage} size={"xl"} />
     ));

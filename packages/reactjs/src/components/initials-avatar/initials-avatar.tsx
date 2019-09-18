@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 
 interface PInitials {
     name: any;
@@ -6,7 +6,7 @@ interface PInitials {
     dark?: boolean;
 }
 
-export default class InitialsAvatar extends Component<PInitials> {
+export default class InitialsAvatar extends React.Component<PInitials> {
     state = {};
 
     /**

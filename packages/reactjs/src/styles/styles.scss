@@ -1,8 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+@import "./themes/default.scss";
 
 body {
     margin: 0px;
     padding: 0px;
+    color: map-get($theme, text-color);
     // background: red;
 }
 
