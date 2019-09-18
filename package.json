@@ -1,5 +1,7 @@
 {
-  "dependencies": {
-    "bootstrap": "^4.3.1"
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.16.4"
   }
 }
