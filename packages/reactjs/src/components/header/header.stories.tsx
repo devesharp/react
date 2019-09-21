@@ -208,18 +208,7 @@ storiesOf("UI|Header/desktop", module)
 storiesOf("UI|Header/mobile", module)
     .addParameters({
         viewport: {
-            viewports: {
-                ...INITIAL_VIEWPORTS,
-                ...{
-                    mobile: {
-                        name: "mobile",
-                        styles: {
-                            width: "420px",
-                            height: "500px"
-                        }
-                    }
-                }
-            },
+            viewports: INITIAL_VIEWPORTS,
             defaultViewport: "iphone6"
         }
     })
