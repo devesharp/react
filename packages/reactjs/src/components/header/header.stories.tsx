@@ -328,7 +328,7 @@ storiesOf("UI|Header/mobile", module)
             />
         </Router>
     ))
-    .add("menu open with submenu active", () => (
+    .add("menu open with sub menu active", () => (
         <Router>
             <Header
                 data={{

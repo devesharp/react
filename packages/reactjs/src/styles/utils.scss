@@ -25,3 +25,18 @@
 .vertical-align-middle {
     vertical-align: middle;
 }
+
+/**
+ * icons
+*/
+
+.icon-close-only {
+    &.s25x25 {
+        width: 25px;
+        height: 25px;
+    }
+
+    &.black {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 24 24' style='enable-background:new 0 0 24 24;' xml:space='preserve' fill='black'%3E%3Cg id='Icons' style='opacity:1.0;'%3E%3Cg id='close'%3E%3Cpolygon id='x' style='fill-rule:evenodd;clip-rule:evenodd;' points='18.717,6.697 17.303,5.283 12,10.586 6.697,5.283 5.283,6.697 10.586,12 5.283,17.303 6.697,18.717 12,13.414 17.303,18.717 18.717,17.303 13.414,12 '/%3E%3C/g%3E%3C/g%3E%3Cg id='Guides' style='display:none;'%3E%3C/g%3E%3C/svg%3E");
+    }
+}
