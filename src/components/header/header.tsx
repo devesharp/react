@@ -1,95 +1,58 @@
-import * as React from "react";
-import { NavLink } from "react-router-dom";
-import UserAvatar from "../user-avatar/user-avatar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import ClickOutside from "../click-outside/click-outside";
-
-export interface PHeader {
-    data: {
-        logo: string;
-        user: {
-            name: string;
-            image?: string;
-        };
-        menuUserBar?: {
-            title: string | JSX.Element;
-            route: string;
-        }[];
-        menu: {
-            title: string | JSX.Element;
-            route: string;
-            opened?: boolean; // Only test: Ativar menu
-            subMenu?: {
-                title: string | JSX.Element;
-                route: string;
-            }[];
-        }[];
-        openUserMenuInfo?: boolean; // Only test: Ativar modal do usuário
-        menuMobileOpen?: boolean; // Only test: Abrir menu mobile
-    };
-}
-interface SHeader {
-    // Menu do usuário aberto
-    openUserMenuInfo: boolean;
-    menuOpen: boolean;
-}
+import * as React from 'react';
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import UserAvatar from '../user-avatar/user-avatar';
+import ClickOutside from '../click-outside/click-outside';
+import { PHeader, SHeader } from './header.interface';
+import HeaderMobile from './header-mobile';
 
 export default class Header extends React.Component<PHeader, SHeader> {
-    state = {
-        openUserMenuInfo: false,
-        menuOpen: false
-    };
-
     constructor(props: PHeader) {
         super(props);
 
-        if (!this.props.data.menuUserBar) {
-            this.props.data.menuUserBar = [
-                {
-                    title: "Meu Perfil",
-                    route: "/settings/accounts"
-                },
-                {
-                    title: "Sair",
-                    route: "/logout"
-                }
-            ];
-        }
+        this.state = {
+            openUserMenuInfo: false,
+            menuOpen: false
+        };
+
         this.closeUserMenuInfo = this.closeUserMenuInfo.bind(this);
         this.toggleUserMenuInfo = this.toggleUserMenuInfo.bind(this);
         this.toggleUserMenuMobile = this.toggleUserMenuMobile.bind(this);
 
-        // Testes Storybook
-        if (this.props.data.openUserMenuInfo) {
-            this.state.openUserMenuInfo = true;
+        /**
+         * Apenas para testes do storybook
+         */
+        if (this.props.__openUserMenuInfo) {
+            this.state = { ...this.state, ...{ openUserMenuInfo: true } };
         }
-        if (this.props.data.menuMobileOpen) {
-            this.state.menuOpen = true;
+        if (this.props.__menuMobileOpen) {
+            this.state = { ...this.state, ...{ menuOpen: true } };
         }
     }
 
     /**
      * Verifica se rota é uma subrota do 'menu' atual
+     *
      * @param location
      * @param subMenu
      */
-    isSubRoute(location, subMenu: any) {
-        for (let x in subMenu) {
-            if (subMenu[x].route == location.pathname) {
+    isSubRoute(location, subMenu: any): boolean {
+        for (const x in subMenu) {
+            if (subMenu[x].route === location.pathname) {
                 return true;
             }
         }
         return false;
     }
 
-    toggleUserMenuInfo() {
+    toggleUserMenuInfo(): any {
         this.setState((state, props) => ({
             openUserMenuInfo: !state.openUserMenuInfo
         }));
     }
 
-    toggleUserMenuMobile() {
+    toggleUserMenuMobile(): void {
         this.setState((state, props) => ({
             menuOpen: !state.menuOpen
         }));
@@ -98,7 +61,7 @@ export default class Header extends React.Component<PHeader, SHeader> {
     /**
      * Fecha Menu do usuário
      */
-    closeUserMenuInfo() {
+    closeUserMenuInfo(): void {
         this.setState({ openUserMenuInfo: false });
     }
 
@@ -106,22 +69,45 @@ export default class Header extends React.Component<PHeader, SHeader> {
      * Renderiza o menu do usuario
      */
     renderUserMenu(): JSX.Element {
-        let { user, menuUserBar } = this.props.data;
-        let { openUserMenuInfo } = this.state;
+        const { user } = this.props;
+        const { openUserMenuInfo } = this.state;
+        const menuUserBar = this.props.menuUserBar || [
+            {
+                title: 'Meu Perfil',
+                route: '/settings/accounts'
+            },
+            {
+                title: 'Sair',
+                route: '/logout'
+            }
+        ];
 
         return (
             <ClickOutside onClickOutside={this.closeUserMenuInfo}>
-                <div className="container-user" onClick={this.toggleUserMenuInfo} onBlur={this.closeUserMenuInfo}>
+                <div
+                    className="container-user"
+                    onClick={this.toggleUserMenuInfo}
+                    onBlur={this.closeUserMenuInfo}
+                >
                     <div className="username-container">
                         <div className="user-image-container">
-                            <UserAvatar user={user} size={"s"} />
+                            <UserAvatar user={user} size="s" />
                         </div>
-                        Olá, <span className="username">{user.name}</span>{" "}
-                        <FontAwesomeIcon icon={faChevronDown} flip="horizontal" />
-                        <div className={"username-container-popup " + (!openUserMenuInfo || "opened")}>
-                            <div className="ds-table" onClick={this.closeUserMenuInfo}>
+                        Olá, <span className="username">{user.name}</span>{' '}
+                        <FontAwesomeIcon
+                            icon={faChevronDown}
+                            flip="horizontal"
+                        />
+                        <div
+                            className={`username-container-popup ${!openUserMenuInfo ||
+                                'opened'}`}
+                        >
+                            <div
+                                className="ds-table"
+                                onClick={this.closeUserMenuInfo}
+                            >
                                 <div className="ds-cell">
-                                    <UserAvatar user={user} size={"m"} />
+                                    <UserAvatar user={user} size="m" />
                                 </div>
                                 <div className="ds-cell pl-2">
                                     <div className="name">{user.name}</div>
@@ -131,7 +117,12 @@ export default class Header extends React.Component<PHeader, SHeader> {
                             <div className="ds-menu">
                                 {!!menuUserBar &&
                                     menuUserBar.map((item, i) => (
-                                        <NavLink key={i} className="ds-item" to={{ pathname: item.route }} exact={true}>
+                                        <NavLink
+                                            key={item.route}
+                                            className="ds-item"
+                                            to={{ pathname: item.route }}
+                                            exact
+                                        >
                                             {item.title}
                                         </NavLink>
                                     ))}
@@ -144,28 +135,118 @@ export default class Header extends React.Component<PHeader, SHeader> {
     }
 
     /**
+     * Render Menu Desktop
+     */
+    renderMenuDesktop(): JSX.Element {
+        const { menu } = this.props;
+        return (
+            <div className="ds-header-bottom">
+                <div className="width-max">
+                    <div className="ds-menu">
+                        {menu.map((item): any => (
+                            <>
+                                {/* -------- MENU DEFAULT --------  */}
+                                {!item.subMenu && (
+                                    <NavLink
+                                        className="ds-menu-item"
+                                        activeClassName="ds-menu-item-active"
+                                        to={{ pathname: item.route }}
+                                        exact
+                                    >
+                                        {item.title}
+                                    </NavLink>
+                                )}
+                                {/* //-------- MENU DEFAULT --------  */}
+
+                                {/* -------- SUBMENU --------  */}
+                                {!!item.subMenu && (
+                                    <div
+                                        className={`ds-menu-category ${!item.opened ||
+                                            'hover'}`}
+                                    >
+                                        <NavLink
+                                            key={item.route}
+                                            className={`ds-menu-item ${!item.opened ||
+                                                'hover'}`}
+                                            activeClassName="ds-menu-item-active"
+                                            to={{
+                                                pathname: item.route
+                                            }}
+                                            onClick={e => e.preventDefault()}
+                                            isActive={(match, location) =>
+                                                this.isSubRoute(
+                                                    location,
+                                                    item.subMenu
+                                                )
+                                            }
+                                        >
+                                            {item.title}{' '}
+                                            <FontAwesomeIcon
+                                                icon={faChevronDown}
+                                                flip="horizontal"
+                                            />
+                                        </NavLink>
+
+                                        <div className="ds-menu-subcategory">
+                                            {item.subMenu.map(
+                                                (subItem, i): any => (
+                                                    <NavLink
+                                                        key={subItem.route}
+                                                        className="ds-item"
+                                                        activeClassName="active"
+                                                        to={{
+                                                            pathname:
+                                                                subItem.route
+                                                        }}
+                                                        exact
+                                                    >
+                                                        {subItem.title}
+                                                    </NavLink>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                                {/* //-------- SUBMENU --------  */}
+                            </>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    /**
      * Render
      */
     render(): JSX.Element {
-        let { logo, menu } = this.props.data;
-        let { menuOpen } = this.state;
-        let { user } = this.props.data;
+        const { logo } = this.props;
+        const { menuOpen } = this.state;
 
         return (
             <>
-                <div className="ds-header-mobile-space"></div>
-                <div className={"ds-header " + (menuOpen ? "ds-menu-mobile-opened" : "")}>
+                <div className="ds-header-mobile-space" />
+                <div
+                    className={`ds-header ${
+                        menuOpen ? 'ds-menu-mobile-opened' : ''
+                    }`}
+                >
                     <div className="ds-header-top">
                         <div className="width-max">
                             <div className="ds-table w-100 table-header">
+                                {/* Menu Hamburguer */}
                                 <div
-                                    className={"ds-menu-hamburger " + (menuOpen ? "open" : "")}
+                                    className={`ds-menu-hamburger ${
+                                        menuOpen ? 'open' : ''
+                                    }`}
                                     onClick={this.toggleUserMenuMobile}
                                 >
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                                    <span />
+                                    <span />
+                                    <span />
                                 </div>
+                                {/* Menu Hamburguer */}
+
                                 {/* -------- Logo --------  */}
                                 <div className="ds-cell vertical-align-middle ds-logo-cell">
                                     <div className="ds-logo">
@@ -173,6 +254,12 @@ export default class Header extends React.Component<PHeader, SHeader> {
                                     </div>
                                 </div>
                                 {/* //-------- Logo --------  */}
+
+                                {/* -------- Content before --------  */}
+                                <div className="ds-cell text-right vertical-align-middle">
+                                    {this.props.contentBeforeUser}
+                                </div>
+                                {/* //-------- Content before --------  */}
 
                                 {/* -------- Usuário --------  */}
                                 <div className="ds-cell text-right vertical-align-middle ds-user-cell">
@@ -182,126 +269,15 @@ export default class Header extends React.Component<PHeader, SHeader> {
                             </div>
                         </div>
                     </div>
-                    {/* -------- Menu --------  */}
-                    <div className="ds-header-bottom">
-                        <div className="width-max">
-                            <div className="ds-menu">
-                                {menu.map((item): any => (
-                                    <>
-                                        {/* -------- MENU DEFAULT --------  */}
-                                        {!item.subMenu && (
-                                            <NavLink
-                                                className="ds-menu-item"
-                                                activeClassName="ds-menu-item-active"
-                                                to={{ pathname: item.route }}
-                                                exact={true}
-                                            >
-                                                {item.title}
-                                            </NavLink>
-                                        )}
-                                        {/* //-------- MENU DEFAULT --------  */}
+                    {/* -------- Menu Desktop --------  */}
+                    {this.renderMenuDesktop()}
+                    {/* //------ Menu Desktop  ------//  */}
 
-                                        {/* -------- SUBMENU --------  */}
-                                        {!!item.subMenu && (
-                                            <div className={"ds-menu-category " + (!item.opened || "hover")}>
-                                                <NavLink
-                                                    className={"ds-menu-item " + (!item.opened || "hover")}
-                                                    activeClassName="ds-menu-item-active"
-                                                    to={{ pathname: item.route }}
-                                                    onClick={e => e.preventDefault()} // Desabilita link
-                                                    isActive={(match, location) =>
-                                                        this.isSubRoute(location, item.subMenu)
-                                                    }
-                                                >
-                                                    {item.title}{" "}
-                                                    <FontAwesomeIcon icon={faChevronDown} flip="horizontal" />
-                                                </NavLink>
-
-                                                <div className="ds-menu-subcategory">
-                                                    {item.subMenu.map((subitem, i): any => (
-                                                        <NavLink
-                                                            className={"ds-item"}
-                                                            activeClassName={"active"}
-                                                            to={{
-                                                                pathname: subitem.route
-                                                            }}
-                                                            exact={true}
-                                                        >
-                                                            {subitem.title}
-                                                        </NavLink>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                        {/* //-------- SUBMENU --------  */}
-                                    </>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                    {/* ///-------- Menu --------  */}
-
-                    {/* ///-------- Menu Mobile --------  */}
-                    <div className="ds-menu-mobile">
-                        <div className="ds-table username-info" onClick={this.closeUserMenuInfo}>
-                            <div className="ds-cell ds-cell-min">
-                                <UserAvatar user={user} size={"m"} />
-                            </div>
-                            <div className="ds-cell pl-2">
-                                <div className="name">{user.name}</div>
-                                <div className="role">Editar perfil</div>
-                            </div>
-                        </div>
-
-                        {menu.map((item): any => (
-                            <>
-                                {/* -------- MENU DEFAULT --------  */}
-                                {!item.subMenu && (
-                                    <NavLink
-                                        className="ds-menu-item"
-                                        activeClassName="ds-menu-item-active"
-                                        to={{ pathname: item.route }}
-                                        exact={true}
-                                    >
-                                        {item.title}
-                                    </NavLink>
-                                )}
-                                {/* //-------- MENU DEFAULT --------  */}
-
-                                {/* -------- SUBMENU --------  */}
-                                {!!item.subMenu && (
-                                    <div className="ds-menu-category">
-                                        <NavLink
-                                            className={"ds-menu-item"}
-                                            activeClassName="ds-menu-item-active"
-                                            to={{ pathname: item.route }}
-                                            onClick={e => e.preventDefault()} // Desabilita link
-                                            isActive={(match, location) => this.isSubRoute(location, item.subMenu)}
-                                        >
-                                            {item.title}
-                                        </NavLink>
-
-                                        <div className="ds-menu-subcategory">
-                                            {item.subMenu.map((subitem, i): any => (
-                                                <NavLink
-                                                    className={"ds-item"}
-                                                    activeClassName={"active"}
-                                                    to={{
-                                                        pathname: subitem.route
-                                                    }}
-                                                    exact={true}
-                                                >
-                                                    {subitem.title}
-                                                </NavLink>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                                {/* //-------- SUBMENU --------  */}
-                            </>
-                        ))}
-                    </div>
-                    {/* ///-------- Menu Mobile --------  */}
+                    <HeaderMobile
+                        {...this.props}
+                        closeUserMenuInfo={this.closeUserMenuInfo}
+                        isSubRoute={this.isSubRoute}
+                    />
                 </div>
             </>
         );

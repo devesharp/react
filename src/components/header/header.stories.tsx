@@ -1,98 +1,103 @@
-import * as React from "react";
-import { storiesOf, addParameters } from "@storybook/react";
-import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
-import Header, { PHeader } from "./header";
-import avatar from "../../../assets/avatar.jpeg";
-import logo from "../../../assets/logo.png";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faCogs, faLayerGroup, faTable, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import * as React from 'react';
+import { storiesOf, addParameters } from '@storybook/react';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import Header from './header';
+import { PHeader } from './header.interface';
+import avatar from '../../../assets/avatar.jpeg';
+import logo from '../../../assets/logo.png';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faUserCircle,
+    faCogs,
+    faLayerGroup,
+    faTable,
+    faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 let data: PHeader = {
-    data: {
-        logo,
-        user: {
-            name: "Verônica",
-            image: avatar
+    logo,
+    user: {
+        name: 'Verônica',
+        image: avatar
+    },
+    menuUserBar: [
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faUserCircle} /> Meu Perfil
+                </>
+            ),
+            route: '/settings/accounts'
         },
-        menuUserBar: [
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faUserCircle} /> Meu Perfil
-                    </>
-                ),
-                route: "/settings/accounts"
-            },
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faSignOutAlt} /> Sair
-                    </>
-                ),
-                route: "/"
-            }
-        ],
-        menu: [
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faUserCircle} /> Home
-                    </>
-                ),
-                route: "/"
-            },
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faLayerGroup} /> Components
-                    </>
-                ),
-                route: "/components",
-                subMenu: [
-                    { title: "Base", route: "/components/base" },
-                    { title: "Commons", route: "/components/commons" },
-                    { title: "Customs", route: "/components/customs" }
-                ]
-            },
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faTable} /> CRUD
-                    </>
-                ),
-                route: "/CRUD",
-                subMenu: [
-                    { title: "Base", route: "/CRUD/base" },
-                    { title: "Commons", route: "/CRUD/commons" },
-                    { title: "Customs", route: "/CRUD/customs" }
-                ]
-            },
-            {
-                title: (
-                    <>
-                        <FontAwesomeIcon icon={faCogs} /> Settings
-                    </>
-                ),
-                route: "/settings"
-            }
-        ]
-    }
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faSignOutAlt} /> Sair
+                </>
+            ),
+            route: '/'
+        }
+    ],
+    menu: [
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faUserCircle} /> Home
+                </>
+            ),
+            route: '/'
+        },
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faLayerGroup} /> Components
+                </>
+            ),
+            route: '/components',
+            subMenu: [
+                { title: 'Base', route: '/components/base' },
+                { title: 'Commons', route: '/components/commons' },
+                { title: 'Customs', route: '/components/customs' }
+            ]
+        },
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faTable} /> CRUD
+                </>
+            ),
+            route: '/CRUD',
+            subMenu: [
+                { title: 'Base', route: '/CRUD/base' },
+                { title: 'Commons', route: '/CRUD/commons' },
+                { title: 'Customs', route: '/CRUD/customs' }
+            ]
+        },
+        {
+            title: (
+                <>
+                    <FontAwesomeIcon icon={faCogs} /> Settings
+                </>
+            ),
+            route: '/settings'
+        }
+    ]
 };
 
-storiesOf("UI|Header/desktop", module)
-    .add("default", () => (
+storiesOf('UI|Header/desktop', module)
+    .add('default', () => (
         <Router>
             <Header {...data} />
         </Router>
     ))
-    .add("menu active", () => (
+    .add('menu active', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
                     menu: [
@@ -102,20 +107,20 @@ storiesOf("UI|Header/desktop", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "/iframe.html"
+                            route: '/iframe.html'
                         }
                     ]
                 }}
             />
         </Router>
     ))
-    .add("menu active with category", () => (
+    .add('menu active with category', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
                     menu: [
@@ -125,15 +130,18 @@ storiesOf("UI|Header/desktop", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "",
+                            route: '',
                             subMenu: [
                                 {
                                     title: (
                                         <>
-                                            <FontAwesomeIcon icon={faUserCircle} /> Home
+                                            <FontAwesomeIcon
+                                                icon={faUserCircle}
+                                            />{' '}
+                                            Home
                                         </>
                                     ),
-                                    route: "/iframe.html"
+                                    route: '/iframe.html'
                                 }
                             ]
                         }
@@ -142,13 +150,13 @@ storiesOf("UI|Header/desktop", module)
             />
         </Router>
     ))
-    .add("submenu open", () => (
+    .add('submenu open', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
                     menu: [
@@ -158,24 +166,30 @@ storiesOf("UI|Header/desktop", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "",
+                            route: '',
                             opened: true,
                             subMenu: [
                                 {
                                     title: (
                                         <>
-                                            <FontAwesomeIcon icon={faUserCircle} /> Home 2
+                                            <FontAwesomeIcon
+                                                icon={faUserCircle}
+                                            />{' '}
+                                            Home 2
                                         </>
                                     ),
-                                    route: "/section"
+                                    route: '/section'
                                 },
                                 {
                                     title: (
                                         <>
-                                            <FontAwesomeIcon icon={faUserCircle} /> Home 12
+                                            <FontAwesomeIcon
+                                                icon={faUserCircle}
+                                            />{' '}
+                                            Home 12
                                         </>
                                     ),
-                                    route: "/section12"
+                                    route: '/section12'
                                 }
                             ]
                         }
@@ -184,20 +198,20 @@ storiesOf("UI|Header/desktop", module)
             />
         </Router>
     ))
-    .add("menu user open", () => (
+    .add('menu user open', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
-                    openUserMenuInfo: true,
+                    __openUserMenuInfo: true,
                     menu: [
                         {
-                            title: "Home",
-                            route: "/"
+                            title: 'Home',
+                            route: '/'
                         }
                     ]
                 }}
@@ -205,28 +219,28 @@ storiesOf("UI|Header/desktop", module)
         </Router>
     ));
 
-storiesOf("UI|Header/mobile", module)
+storiesOf('UI|Header/mobile', module)
     .addParameters({
         viewport: {
             viewports: INITIAL_VIEWPORTS,
-            defaultViewport: "iphone6"
+            defaultViewport: 'iphone6'
         }
     })
-    .add("default", () => (
+    .add('default', () => (
         <Router>
             <Header {...data} />
         </Router>
     ))
-    .add("menu open", () => (
+    .add('menu open', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
-                    menuMobileOpen: true,
+                    __menuMobileOpen: true,
                     menu: [
                         {
                             title: (
@@ -234,19 +248,19 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "",
+                            route: '',
                             subMenu: [
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 }
                             ]
                         },
@@ -256,23 +270,23 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: ""
+                            route: ''
                         }
                     ]
                 }}
             />
         </Router>
     ))
-    .add("menu open with menu active", () => (
+    .add('menu open with menu active', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
-                    menuMobileOpen: true,
+                    __menuMobileOpen: true,
                     menu: [
                         {
                             title: (
@@ -280,7 +294,7 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "/iframe.html"
+                            route: '/iframe.html'
                         },
                         {
                             title: (
@@ -288,19 +302,19 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "",
+                            route: '',
                             subMenu: [
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 }
                             ]
                         },
@@ -310,23 +324,23 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: ""
+                            route: ''
                         }
                     ]
                 }}
             />
         </Router>
     ))
-    .add("menu open with sub menu active", () => (
+    .add('menu open with sub menu active', () => (
         <Router>
             <Header
-                data={{
+                {...{
                     logo,
                     user: {
-                        name: "Verônica",
+                        name: 'Verônica',
                         image: avatar
                     },
-                    menuMobileOpen: true,
+                    __menuMobileOpen: true,
                     menu: [
                         {
                             title: (
@@ -334,7 +348,7 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "/"
+                            route: '/'
                         },
                         {
                             title: (
@@ -342,19 +356,19 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: "",
+                            route: '',
                             subMenu: [
                                 {
-                                    title: "Home",
-                                    route: "/iframe.html"
+                                    title: 'Home',
+                                    route: '/iframe.html'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 },
                                 {
-                                    title: "Home",
-                                    route: "/"
+                                    title: 'Home',
+                                    route: '/'
                                 }
                             ]
                         },
@@ -364,7 +378,7 @@ storiesOf("UI|Header/mobile", module)
                                     <FontAwesomeIcon icon={faUserCircle} /> Home
                                 </>
                             ),
-                            route: ""
+                            route: ''
                         }
                     ]
                 }}
