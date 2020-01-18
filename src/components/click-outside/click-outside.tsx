@@ -1,50 +1,44 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
 
 export interface PClickOutside {
     onClickOutside: (evt?: Event) => any;
     onClickInside?: (evt?: Event) => any;
     children: JSX.Element;
 }
-interface SClickOutside {}
 
-export default class ClickOutside extends React.Component<PClickOutside, SClickOutside> {
-    state = {};
+class ClickOutside extends React.Component<PClickOutside, any> {
+    protected areaRef: React.RefObject<any>;
 
-    areaRef: any = true;
-
-    constructor(props: PClickOutside) {
+    constructor(props) {
         super(props);
-        // this.areaRef = React.createRef<HTMLDivElement>();
-        this.handleDocumentClick;
+        this.areaRef = React.createRef();
     }
 
-    componentDidMount() {
-        window.addEventListener("click", evt => this.handleDocumentClick(evt));
+    componentDidMount(): any {
+        window.addEventListener('click', evt => this.handleDocumentClick(evt));
     }
 
-    componentWillUnmount() {
-        window.removeEventListener("click", evt => this.handleDocumentClick(evt));
+    componentWillUnmount(): any {
+        window.removeEventListener('click', evt =>
+            this.handleDocumentClick(evt)
+        );
     }
 
-    handleDocumentClick(evt) {
-        const area = ReactDOM.findDOMNode(this.refs.areaRef);
+    handleDocumentClick(evt): any {
+        const element = this.areaRef.current;
 
-        if (area) {
-            if (!area.contains(evt.target)) {
+        if (element) {
+            if (!element.contains(evt.target)) {
                 this.props.onClickOutside(evt);
-            } else {
-                if (this.props.onClickInside) {
-                    this.props.onClickInside(evt);
-                }
+            } else if (this.props.onClickInside) {
+                this.props.onClickInside(evt);
             }
         }
     }
 
-    /**
-     * Render
-     */
-    render(): JSX.Element {
-        return <div ref="areaRef">{this.props.children}</div>;
+    render(): any {
+        return <div ref={this.areaRef}>{this.props.children}</div>;
     }
 }
+
+export default ClickOutside;

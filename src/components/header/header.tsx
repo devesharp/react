@@ -11,8 +11,12 @@ import HeaderDesktopMenuBar from './header--deskop-menu-bar';
  */
 const Header: React.FunctionComponent<PHeader> = props => {
     //
-    const [menuMobile, setMenuMobile] = React.useState(false);
-    const [openUserMenuInfo, setOpenUserMenuInfo] = React.useState(false);
+    const [menuMobile, setMenuMobile] = React.useState(
+        !!props.__menuMobileOpen
+    );
+    const [openUserMenuInfo, setOpenUserMenuInfo] = React.useState(
+        !!props.__openUserMenuInfo
+    );
 
     //
     const toggleMenuMobile = (): any => setMenuMobile(!menuMobile);
