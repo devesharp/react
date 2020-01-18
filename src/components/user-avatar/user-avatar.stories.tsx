@@ -12,7 +12,7 @@ const userWithoutImage = {
     name: 'John'
 };
 
-storiesOf('UserAvatar', module)
+storiesOf('UI|UserAvatar', module)
     .add('with image', () => <UserAvatar user={userWithImage} />)
     .add('withou image', () => <UserAvatar user={userWithoutImage} />)
     .add('size xs with image', () => (
