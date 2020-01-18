@@ -36,6 +36,17 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
@@ -2988,120 +2999,6 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-var InitialsAvatar = /** @class */ (function (_super) {
-    __extends(InitialsAvatar, _super);
-    function InitialsAvatar() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {};
-        /**
-         * Style do componente
-         */
-        _this.style = {};
-        /**
-         * Letra
-         */
-        _this.initials = "";
-        /**
-         * Colors
-         */
-        _this.colorList = [
-            "#3ec55d",
-            "#00c5d6",
-            "#f15588",
-            "#ffb229",
-            "#8f63ff",
-            "#8f63ff",
-            "#00b1cd"
-        ];
-        return _this;
-    }
-    InitialsAvatar.prototype.getLetter = function () {
-        /**
-         * Converte nome em um das cores salvas
-         */
-        var colorNumber = 0;
-        for (var key in this.props.name) {
-            if (this.props.name.hasOwnProperty(key)) {
-                colorNumber += this.props.name[key].charCodeAt(0);
-            }
-        }
-        var color = this.colorList[colorNumber % this.colorList.length];
-        // Resgata primeiro caracter
-        this.initials = this.props.name[0].toUpperCase();
-        // Adicionar color no style
-        this.style = {
-            color: color
-        };
-        /**
-         * Caso seja dark muda background
-         */
-        if (!this.props.dark) {
-            this.style.background = color + "24";
-        }
-        /**
-         * Tamanho do size
-         */
-        this.classStyle = "initials-letter";
-        switch (this.props.size) {
-            case "xs":
-            case "s":
-            case "m":
-            case "l":
-            case "xl":
-                this.classStyle += " initials-" + this.props.size;
-                break;
-        }
-    };
-    InitialsAvatar.prototype.render = function () {
-        this.getLetter();
-        return (React.createElement("div", { className: this.classStyle, style: this.style }, this.initials));
-    };
-    return InitialsAvatar;
-}(React.Component));
-
-var UserAvatar = /** @class */ (function (_super) {
-    __extends(UserAvatar, _super);
-    function UserAvatar() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {};
-        return _this;
-    }
-    /**
-     * Configurar componente
-     */
-    UserAvatar.prototype.configure = function () {
-        /**
-         * Tamanho do size
-         */
-        this.classStyle = "ds-user-avatar";
-        switch (this.props.size) {
-            case "xs":
-            case "s":
-            case "m":
-            case "l":
-            case "xl":
-                this.classStyle += " initials-" + this.props.size;
-                break;
-        }
-    };
-    /**
-     * Render
-     */
-    UserAvatar.prototype.render = function () {
-        this.configure();
-        var size = this.props.size;
-        var _a = this.props.user, name = _a.name, image = _a.image;
-        if (image) {
-            return (React.createElement("div", { className: this.classStyle },
-                React.createElement("img", { src: image })));
-        }
-        else {
-            return React.createElement(InitialsAvatar, { name: name, dark: true, size: size });
-        }
-    };
-    return UserAvatar;
-}(React.Component));
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -4647,6 +4544,120 @@ var faChevronDown = {
   icon: [448, 512, [], "f078", "M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"]
 };
 
+var InitialsAvatar = /** @class */ (function (_super) {
+    __extends(InitialsAvatar, _super);
+    function InitialsAvatar() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {};
+        /**
+         * Style do componente
+         */
+        _this.style = {};
+        /**
+         * Letra
+         */
+        _this.initials = "";
+        /**
+         * Colors
+         */
+        _this.colorList = [
+            "#3ec55d",
+            "#00c5d6",
+            "#f15588",
+            "#ffb229",
+            "#8f63ff",
+            "#8f63ff",
+            "#00b1cd"
+        ];
+        return _this;
+    }
+    InitialsAvatar.prototype.getLetter = function () {
+        /**
+         * Converte nome em um das cores salvas
+         */
+        var colorNumber = 0;
+        for (var key in this.props.name) {
+            if (this.props.name.hasOwnProperty(key)) {
+                colorNumber += this.props.name[key].charCodeAt(0);
+            }
+        }
+        var color = this.colorList[colorNumber % this.colorList.length];
+        // Resgata primeiro caracter
+        this.initials = this.props.name[0].toUpperCase();
+        // Adicionar color no style
+        this.style = {
+            color: color
+        };
+        /**
+         * Caso seja dark muda background
+         */
+        if (!this.props.dark) {
+            this.style.background = color + "24";
+        }
+        /**
+         * Tamanho do size
+         */
+        this.classStyle = "initials-letter";
+        switch (this.props.size) {
+            case "xs":
+            case "s":
+            case "m":
+            case "l":
+            case "xl":
+                this.classStyle += " initials-" + this.props.size;
+                break;
+        }
+    };
+    InitialsAvatar.prototype.render = function () {
+        this.getLetter();
+        return (React.createElement("div", { className: this.classStyle, style: this.style }, this.initials));
+    };
+    return InitialsAvatar;
+}(React.Component));
+
+var UserAvatar = /** @class */ (function (_super) {
+    __extends(UserAvatar, _super);
+    function UserAvatar() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {};
+        return _this;
+    }
+    /**
+     * Configurar componente
+     */
+    UserAvatar.prototype.configure = function () {
+        /**
+         * Tamanho do size
+         */
+        this.classStyle = "ds-user-avatar";
+        switch (this.props.size) {
+            case "xs":
+            case "s":
+            case "m":
+            case "l":
+            case "xl":
+                this.classStyle += " initials-" + this.props.size;
+                break;
+        }
+    };
+    /**
+     * Render
+     */
+    UserAvatar.prototype.render = function () {
+        this.configure();
+        var size = this.props.size;
+        var _a = this.props.user, name = _a.name, image = _a.image;
+        if (image) {
+            return (React.createElement("div", { className: this.classStyle },
+                React.createElement("img", { src: image })));
+        }
+        else {
+            return React.createElement(InitialsAvatar, { name: name, dark: true, size: size });
+        }
+    };
+    return UserAvatar;
+}(React.Component));
+
 var ClickOutside = /** @class */ (function (_super) {
     __extends(ClickOutside, _super);
     function ClickOutside(props) {
@@ -4687,6 +4698,27 @@ var ClickOutside = /** @class */ (function (_super) {
     return ClickOutside;
 }(React.Component));
 
+var HeaderMobile = function (props) {
+    var logo = props.logo, menu = props.menu;
+    var user = props.user;
+    return (React.createElement("div", { className: "ds-menu-mobile" },
+        React.createElement("div", { className: "ds-table username-info", onClick: props.closeUserMenuInfo },
+            React.createElement("div", { className: "ds-cell ds-cell-min" },
+                React.createElement(UserAvatar, { user: user, size: "m" })),
+            React.createElement("div", { className: "ds-cell pl-2" },
+                React.createElement("div", { className: "name" }, user.name),
+                React.createElement("div", { className: "role" }, "Editar perfil"))),
+        menu.map(function (item) { return (React.createElement(React.Fragment, null,
+            !item.subMenu && (React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, exact: true }, item.title)),
+            !!item.subMenu && (React.createElement("div", { className: "ds-menu-category" },
+                React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, onClick: function (e) { return e.preventDefault(); }, isActive: function (match, location) {
+                        return props.isSubRoute(location, item.subMenu);
+                    } }, item.title),
+                React.createElement("div", { className: "ds-menu-subcategory" }, item.subMenu.map(function (subItem, i) { return (React.createElement(NavLink, { key: subItem.route, className: "ds-item", activeClassName: "active", to: {
+                        pathname: subItem.route
+                    }, exact: true }, subItem.title)); })))))); })));
+};
+
 var Header = /** @class */ (function (_super) {
     __extends(Header, _super);
     function Header(props) {
@@ -4695,38 +4727,29 @@ var Header = /** @class */ (function (_super) {
             openUserMenuInfo: false,
             menuOpen: false
         };
-        if (!_this.props.data.menuUserBar) {
-            _this.props.data.menuUserBar = [
-                {
-                    title: "Meu Perfil",
-                    route: "/settings/accounts"
-                },
-                {
-                    title: "Sair",
-                    route: "/logout"
-                }
-            ];
-        }
         _this.closeUserMenuInfo = _this.closeUserMenuInfo.bind(_this);
         _this.toggleUserMenuInfo = _this.toggleUserMenuInfo.bind(_this);
         _this.toggleUserMenuMobile = _this.toggleUserMenuMobile.bind(_this);
-        // Testes Storybook
-        if (_this.props.data.openUserMenuInfo) {
-            _this.state.openUserMenuInfo = true;
+        /**
+         * Apenas para testes do storybook
+         */
+        if (_this.props.__openUserMenuInfo) {
+            _this.state = __assign(__assign({}, _this.state), { openUserMenuInfo: true });
         }
-        if (_this.props.data.menuMobileOpen) {
-            _this.state.menuOpen = true;
+        if (_this.props.__menuMobileOpen) {
+            _this.state = __assign(__assign({}, _this.state), { menuOpen: true });
         }
         return _this;
     }
     /**
      * Verifica se rota é uma subrota do 'menu' atual
+     *
      * @param location
      * @param subMenu
      */
     Header.prototype.isSubRoute = function (location, subMenu) {
         for (var x in subMenu) {
-            if (subMenu[x].route == location.pathname) {
+            if (subMenu[x].route === location.pathname) {
                 return true;
             }
         }
@@ -4752,8 +4775,18 @@ var Header = /** @class */ (function (_super) {
      * Renderiza o menu do usuario
      */
     Header.prototype.renderUserMenu = function () {
-        var _a = this.props.data, user = _a.user, menuUserBar = _a.menuUserBar;
+        var user = this.props.user;
         var openUserMenuInfo = this.state.openUserMenuInfo;
+        var menuUserBar = this.props.menuUserBar || [
+            {
+                title: 'Meu Perfil',
+                route: '/settings/accounts'
+            },
+            {
+                title: 'Sair',
+                route: '/logout'
+            }
+        ];
         return (React.createElement(ClickOutside, { onClickOutside: this.closeUserMenuInfo },
             React.createElement("div", { className: "container-user", onClick: this.toggleUserMenuInfo, onBlur: this.closeUserMenuInfo },
                 React.createElement("div", { className: "username-container" },
@@ -4761,9 +4794,10 @@ var Header = /** @class */ (function (_super) {
                         React.createElement(UserAvatar, { user: user, size: "s" })),
                     "Ol\u00E1, ",
                     React.createElement("span", { className: "username" }, user.name),
-                    " ",
+                    ' ',
                     React.createElement(FontAwesomeIcon, { icon: faChevronDown, flip: "horizontal" }),
-                    React.createElement("div", { className: "username-container-popup " + (!openUserMenuInfo || "opened") },
+                    React.createElement("div", { className: "username-container-popup " + (!openUserMenuInfo ||
+                            'opened') },
                         React.createElement("div", { className: "ds-table", onClick: this.closeUserMenuInfo },
                             React.createElement("div", { className: "ds-cell" },
                                 React.createElement(UserAvatar, { user: user, size: "m" })),
@@ -4771,58 +4805,56 @@ var Header = /** @class */ (function (_super) {
                                 React.createElement("div", { className: "name" }, user.name),
                                 React.createElement("div", { className: "role" }, "Usu\u00E1rio"))),
                         React.createElement("div", { className: "ds-menu" }, !!menuUserBar &&
-                            menuUserBar.map(function (item, i) { return (React.createElement(NavLink, { key: i, className: "ds-item", to: { pathname: item.route }, exact: true }, item.title)); })))))));
+                            menuUserBar.map(function (item, i) { return (React.createElement(NavLink, { key: item.route, className: "ds-item", to: { pathname: item.route }, exact: true }, item.title)); })))))));
+    };
+    /**
+     * Render Menu Desktop
+     */
+    Header.prototype.renderMenuDesktop = function () {
+        var _this = this;
+        var menu = this.props.menu;
+        return (React.createElement("div", { className: "ds-header-bottom" },
+            React.createElement("div", { className: "width-max" },
+                React.createElement("div", { className: "ds-menu" }, menu.map(function (item) { return (React.createElement(React.Fragment, null,
+                    !item.subMenu && (React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, exact: true }, item.title)),
+                    !!item.subMenu && (React.createElement("div", { className: "ds-menu-category " + (!item.opened ||
+                            'hover') },
+                        React.createElement(NavLink, { key: item.route, className: "ds-menu-item " + (!item.opened ||
+                                'hover'), activeClassName: "ds-menu-item-active", to: {
+                                pathname: item.route
+                            }, onClick: function (e) { return e.preventDefault(); }, isActive: function (match, location) {
+                                return _this.isSubRoute(location, item.subMenu);
+                            } },
+                            item.title,
+                            ' ',
+                            React.createElement(FontAwesomeIcon, { icon: faChevronDown, flip: "horizontal" })),
+                        React.createElement("div", { className: "ds-menu-subcategory" }, item.subMenu.map(function (subItem, i) { return (React.createElement(NavLink, { key: subItem.route, className: "ds-item", activeClassName: "active", to: {
+                                pathname: subItem.route
+                            }, exact: true }, subItem.title)); })))))); })))));
     };
     /**
      * Render
      */
     Header.prototype.render = function () {
-        var _this = this;
-        var _a = this.props.data, logo = _a.logo, menu = _a.menu;
+        var logo = this.props.logo;
         var menuOpen = this.state.menuOpen;
-        var user = this.props.data.user;
         return (React.createElement(React.Fragment, null,
             React.createElement("div", { className: "ds-header-mobile-space" }),
-            React.createElement("div", { className: "ds-header " + (menuOpen ? "ds-menu-mobile-opened" : "") },
+            React.createElement("div", { className: "ds-header " + (menuOpen ? 'ds-menu-mobile-opened' : '') },
                 React.createElement("div", { className: "ds-header-top" },
                     React.createElement("div", { className: "width-max" },
                         React.createElement("div", { className: "ds-table w-100 table-header" },
-                            React.createElement("div", { className: "ds-menu-hamburger " + (menuOpen ? "open" : ""), onClick: this.toggleUserMenuMobile },
+                            React.createElement("div", { className: "ds-menu-hamburger " + (menuOpen ? 'open' : ''), onClick: this.toggleUserMenuMobile },
                                 React.createElement("span", null),
                                 React.createElement("span", null),
                                 React.createElement("span", null)),
                             React.createElement("div", { className: "ds-cell vertical-align-middle ds-logo-cell" },
                                 React.createElement("div", { className: "ds-logo" },
                                     React.createElement("img", { src: logo, alt: "" }))),
+                            React.createElement("div", { className: "ds-cell text-right vertical-align-middle" }, this.props.contentBeforeUser),
                             React.createElement("div", { className: "ds-cell text-right vertical-align-middle ds-user-cell" }, this.renderUserMenu())))),
-                React.createElement("div", { className: "ds-header-bottom" },
-                    React.createElement("div", { className: "width-max" },
-                        React.createElement("div", { className: "ds-menu" }, menu.map(function (item) { return (React.createElement(React.Fragment, null,
-                            !item.subMenu && (React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, exact: true }, item.title)),
-                            !!item.subMenu && (React.createElement("div", { className: "ds-menu-category " + (!item.opened || "hover") },
-                                React.createElement(NavLink, { className: "ds-menu-item " + (!item.opened || "hover"), activeClassName: "ds-menu-item-active", to: { pathname: item.route }, onClick: function (e) { return e.preventDefault(); }, isActive: function (match, location) {
-                                        return _this.isSubRoute(location, item.subMenu);
-                                    } },
-                                    item.title,
-                                    " ",
-                                    React.createElement(FontAwesomeIcon, { icon: faChevronDown, flip: "horizontal" })),
-                                React.createElement("div", { className: "ds-menu-subcategory" }, item.subMenu.map(function (subitem, i) { return (React.createElement(NavLink, { className: "ds-item", activeClassName: "active", to: {
-                                        pathname: subitem.route
-                                    }, exact: true }, subitem.title)); })))))); })))),
-                React.createElement("div", { className: "ds-menu-mobile" },
-                    React.createElement("div", { className: "ds-table username-info", onClick: this.closeUserMenuInfo },
-                        React.createElement("div", { className: "ds-cell ds-cell-min" },
-                            React.createElement(UserAvatar, { user: user, size: "m" })),
-                        React.createElement("div", { className: "ds-cell pl-2" },
-                            React.createElement("div", { className: "name" }, user.name),
-                            React.createElement("div", { className: "role" }, "Editar perfil"))),
-                    menu.map(function (item) { return (React.createElement(React.Fragment, null,
-                        !item.subMenu && (React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, exact: true }, item.title)),
-                        !!item.subMenu && (React.createElement("div", { className: "ds-menu-category" },
-                            React.createElement(NavLink, { className: "ds-menu-item", activeClassName: "ds-menu-item-active", to: { pathname: item.route }, onClick: function (e) { return e.preventDefault(); }, isActive: function (match, location) { return _this.isSubRoute(location, item.subMenu); } }, item.title),
-                            React.createElement("div", { className: "ds-menu-subcategory" }, item.subMenu.map(function (subitem, i) { return (React.createElement(NavLink, { className: "ds-item", activeClassName: "active", to: {
-                                    pathname: subitem.route
-                                }, exact: true }, subitem.title)); })))))); })))));
+                this.renderMenuDesktop(),
+                React.createElement(HeaderMobile, __assign({}, this.props, { closeUserMenuInfo: this.closeUserMenuInfo, isSubRoute: this.isSubRoute })))));
     };
     return Header;
 }(React.Component));

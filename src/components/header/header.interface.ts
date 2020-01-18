@@ -22,6 +22,14 @@ export interface PHeader {
     __menuMobileOpen?: boolean; // Only test: Abrir menu mobile
 }
 
+export interface PHeaderChild extends PHeader {
+    openUserMenuInfo: boolean;
+    menuMobile: boolean;
+    closeUserMenuInfo: () => any;
+    toggleUserMenuInfo: () => any;
+    toggleMenuMobile: () => any;
+}
+
 export interface SHeader {
     // Menu do usuário aberto
     openUserMenuInfo: boolean;

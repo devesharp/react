@@ -1,5 +1,5 @@
-@import "~bootstrap/scss/bootstrap";
-@import "./themes/default.scss";
+@import '~bootstrap/scss/bootstrap';
+@import './themes/default.scss';
 
 body {
     margin: 0px;
@@ -8,9 +8,9 @@ body {
     // background: red;
 }
 
-@import "./utils.scss";
-@import "./../components/header/header.scss";
-@import "./../components/initials-avatar/initials-avatar.scss";
-@import "./../components/user-avatar/user-avatar.scss";
-@import "./../components/modal/modal.component.scss";
-@import "./../components/login/login.component.scss";
+@import './utils.scss';
+@import '../components/header/header.scss';
+@import './../components/initials-avatar/initials-avatar.scss';
+@import './../components/user-avatar/user-avatar.scss';
+@import './../components/modal/modal.component.scss';
+@import './../components/login/login.component.scss';

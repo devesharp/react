@@ -3,21 +3,16 @@ import { NavLink } from 'react-router-dom';
 import UserAvatar from '../user-avatar/user-avatar';
 import { PHeader } from './header.interface';
 
-interface PHeaderMobile extends PHeader {
-    closeUserMenuInfo: any;
-    isSubRoute: any;
-}
-
-const HeaderMobile: React.FunctionComponent<PHeaderMobile> = props => {
+const HeaderMobile: React.FunctionComponent<PHeader> = props => {
+    const isSubRoute = (location, subMenu: any): boolean => {
+        return !subMenu.every(item => item.route !== location.pathname);
+    };
     const { logo, menu } = props;
     const { user } = props;
 
     return (
         <div className="ds-menu-mobile">
-            <div
-                className="ds-table username-info"
-                onClick={props.closeUserMenuInfo}
-            >
+            <div className="ds-table username-info">
                 <div className="ds-cell ds-cell-min">
                     <UserAvatar user={user} size="m" />
                 </div>
@@ -52,7 +47,7 @@ const HeaderMobile: React.FunctionComponent<PHeaderMobile> = props => {
                                 to={{ pathname: item.route }}
                                 onClick={e => e.preventDefault()} // Desabilita link
                                 isActive={(match, location) =>
-                                    props.isSubRoute(location, item.subMenu)
+                                    isSubRoute(location, item.subMenu)
                                 }
                             >
                                 {item.title}

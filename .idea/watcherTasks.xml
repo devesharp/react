@@ -3,6 +3,7 @@
   <component name="ProjectTasksOptions">
     <enabled-global>
       <option value="Prettier" />
+      <option value="Eslint TSX" />
       <option value="Eslint JSX" />
     </enabled-global>
   </component>
