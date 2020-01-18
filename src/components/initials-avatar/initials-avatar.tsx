@@ -1,93 +1,74 @@
-import * as React from "react";
+import * as React from 'react';
 
 interface PInitials {
     name: any;
     size?: string;
     dark?: boolean;
+    sizeCircle?: {
+        width: number;
+        height: number;
+    };
 }
 
-export default class InitialsAvatar extends React.Component<PInitials> {
-    state = {};
+const colorList = [
+    '#3ec55d',
+    '#00c5d6',
+    '#f15588',
+    '#ffb229',
+    '#8f63ff',
+    '#8f63ff',
+    '#00b1cd'
+];
+
+const InitialsAvatar: React.FunctionComponent<PInitials> = props => {
+    const initials = props.name[0].toUpperCase();
 
     /**
-     * Class utilizadas no componente
+     * Resgatar cor de acordo com nome
      */
-    classStyle: string;
-
-    /**
-     * Style do componente
-     */
-    style: {
-        background?: string;
-        color?: string;
-    } = {};
-
-    /**
-     * Letra
-     */
-    initials = "";
-
-    /**
-     * Colors
-     */
-    colorList = [
-        "#3ec55d",
-        "#00c5d6",
-        "#f15588",
-        "#ffb229",
-        "#8f63ff",
-        "#8f63ff",
-        "#00b1cd"
-    ];
-
-    getLetter() {
-        /**
-         * Converte nome em um das cores salvas
-         */
-        let colorNumber = 0;
-        for (const key in this.props.name) {
-            if (this.props.name.hasOwnProperty(key)) {
-                colorNumber += this.props.name[key].charCodeAt(0);
-            }
-        }
-        const color = this.colorList[colorNumber % this.colorList.length];
-
-        // Resgata primeiro caracter
-        this.initials = this.props.name[0].toUpperCase();
-
-        // Adicionar color no style
-        this.style = {
-            color
-        };
-
-        /**
-         * Caso seja dark muda background
-         */
-        if (!this.props.dark) {
-            this.style.background = `${color}24`;
-        }
-
-        /**
-         * Tamanho do size
-         */
-        this.classStyle = "initials-letter";
-        switch (this.props.size) {
-            case "xs":
-            case "s":
-            case "m":
-            case "l":
-            case "xl":
-                this.classStyle += " initials-" + this.props.size;
-                break;
-        }
-    }
-
-    render() {
-        this.getLetter();
-        return (
-            <div className={this.classStyle} style={this.style}>
-                {this.initials}
-            </div>
+    const colorNumber = props.name
+        .split('')
+        .reduce(
+            (previousValue, currentValue) =>
+                previousValue + currentValue.charCodeAt(0),
+            0
         );
+    const color = colorList[colorNumber % colorList.length];
+
+    const style: any = {
+        color
+    };
+
+    if (!props.dark) {
+        style.background = `${color}24`;
     }
-}
+
+    /**
+     * Tamanho do size
+     */
+    let classStyle = 'initials-letter';
+
+    switch (props.size) {
+        case 'xs':
+        case 's':
+        case 'm':
+        case 'l':
+        case 'xl':
+            classStyle += ` initials-${props.size}`;
+            break;
+    }
+
+    if (props.sizeCircle) {
+        style.width = `${props.sizeCircle.width}px`;
+        style.height = `${props.sizeCircle.height}px`;
+        style.lineHeight = `${props.sizeCircle.height}px`;
+        style.fontSize = `${props.sizeCircle.height / 2}px`;
+    }
+
+    return (
+        <div className={classStyle} style={style}>
+            {initials}
+        </div>
+    );
+};
+export default InitialsAvatar;
