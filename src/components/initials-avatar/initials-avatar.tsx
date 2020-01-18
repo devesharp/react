@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface PInitials {
     name: any;
-    size?: string;
+    size?: 'xs' | 's' | 'm' | 'l' | 'xl';
     dark?: boolean;
     sizeCircle?: {
         width: number;

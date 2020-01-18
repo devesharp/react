@@ -59,3 +59,21 @@ onClickOutside: (evt?: Event) => any;
 // Callback ao clicar dentro do elemento
 onClickInside?: (evt?: Event) => any;
 ```
+
+#### `<InitialsAvatar />`
+
+**Props**
+
+```jsx
+// Nome do usuário
+name: any;
+// Tamanho
+size?: 'xs' | 's' | 'm' | 'l' | 'xl';
+// Dark ou Light
+dark?: boolean;
+// Tamanho personalizado
+sizeCircle?: {
+    width: number;
+    height: number;
+};
+```
