@@ -77,3 +77,22 @@ sizeCircle?: {
     height: number;
 };
 ```
+
+#### `<UserAvatar />`
+
+**Props**
+
+```jsx
+// Informações do usuário
+user: {
+    name: string;
+    image?: string;
+};
+// Tamanho
+size?: 'xs' | 's' | 'm' | 'l' | 'xl';
+// Tamanho personalizado
+sizeCircle?: {
+    width: number;
+    height: number;
+};
+```
