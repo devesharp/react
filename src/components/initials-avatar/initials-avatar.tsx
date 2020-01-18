@@ -9,6 +9,7 @@ interface PInitials {
         height: number;
     };
 }
+0;
 
 const colorList = [
     '#3ec55d',

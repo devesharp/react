@@ -1,58 +1,56 @@
-import * as React from "react";
-import InitialsAvatar from "../initials-avatar/initials-avatar";
+import * as React from 'react';
+import InitialsAvatar from '../initials-avatar/initials-avatar';
 
 interface PUserAvatar {
-    size?: "xs" | "s" | "m" | "l" | "xl";
     user: {
         name: string;
         image?: string;
     };
+    size?: 'xs' | 's' | 'm' | 'l' | 'xl';
+    sizeCircle?: {
+        width: number;
+        height: number;
+    };
 }
 
-export default class UserAvatar extends React.Component<PUserAvatar> {
-    state = {};
+const UserAvatar: React.FunctionComponent<PUserAvatar> = props => {
+    const style: any = {};
 
     /**
-     * Class utilizadas no componente
+     * Tamanho do size
      */
-    classStyle: string;
+    let classStyle = 'ds-user-avatar';
 
-    /**
-     * Configurar componente
-     */
-    configure() {
-        /**
-         * Tamanho do size
-         */
-        this.classStyle = "ds-user-avatar";
-        switch (this.props.size) {
-            case "xs":
-            case "s":
-            case "m":
-            case "l":
-            case "xl":
-                this.classStyle += " initials-" + this.props.size;
-                break;
-        }
+    switch (props.size) {
+        case 'xs':
+        case 's':
+        case 'm':
+        case 'l':
+        case 'xl':
+            classStyle += ` initials-${props.size}`;
+            break;
     }
 
-    /**
-     * Render
-     */
-    render() {
-        this.configure();
-
-        let size = this.props.size;
-        let { name, image } = this.props.user;
-
-        if (image) {
-            return (
-                <div className={this.classStyle}>
-                    <img src={image} />
-                </div>
-            );
-        } else {
-            return <InitialsAvatar name={name} dark={true} size={size} />;
-        }
+    if (props.sizeCircle) {
+        style.width = `${props.sizeCircle.width}px`;
+        style.height = `${props.sizeCircle.height}px`;
     }
-}
+
+    const { size } = props;
+    const { name, image } = props.user;
+
+    return image ? (
+        <div className={classStyle} style={style}>
+            <img src={image} />
+        </div>
+    ) : (
+        <InitialsAvatar
+            name={name}
+            dark
+            size={size}
+            sizeCircle={props.sizeCircle}
+        />
+    );
+};
+
+export default UserAvatar;
