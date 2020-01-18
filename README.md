@@ -18,7 +18,7 @@ $ yarn add @devesharp/react
 
 ## Documentação
 
-#### `Header`
+#### `<Header />`
 
 **Props**
 
@@ -47,4 +47,15 @@ menu: {
 }[],
 // Conteúdo antes das informações do usuário (canto superior direito)
 contentBeforeUser?: JSX.Element;
+```
+
+#### `<ClickOutside />`
+
+**Props**
+
+```jsx
+// Callback ao clicar fora do elemento
+onClickOutside: (evt?: Event) => any;
+// Callback ao clicar dentro do elemento
+onClickInside?: (evt?: Event) => any;
 ```
